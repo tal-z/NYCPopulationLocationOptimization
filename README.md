@@ -1,3 +1,5 @@
+https://github.com/tal-z/NYCPopulationLocationOptimization/blob/master/static/MnBldgFootPrintsAndNodes_2021-04-18.pdf
+
 ## Structure
 #### Modules:
 1. AllocateHouseholdsToEdges. Establishes an allocation of NYC households nearest to each edge in a graph of NYC's walkable street/sidewalk network, by interpolating NYC MapPLUTO data with a network graph object derived from Open Street Map data.
