@@ -1,4 +1,4 @@
-![Building footprints and nodes (intersections) for analysis](https://github.com/tal-z/NYCPopulationLocationOptimization/blob/master/static/MnBldgFootPrintsAndNodes_2021-04-18.pdf)
+![Building footprints and nodes (intersections) for analysis](https://github.com/tal-z/NYCPopulationLocationOptimization/blob/master/static/MnBldgFootPrintsAndNodes_2021-04-18.svg)
 
 ## Structure
 #### Modules:
