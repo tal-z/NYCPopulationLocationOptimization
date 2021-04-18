@@ -7,13 +7,13 @@
 5. AssignDropOffsToNodes. Will determine which nodes are assigned as drop-offs.
 
 ## Strategy
-####Graph Set-up:
+#### Graph Set-up:
 - Edges represent walkable streets
 - Nodes represent intersections
 - Edge weights represent the number of households along that street.
   - Note that each household is allocated to exactly one edge
 
-####Iterative Placement Method:  
+#### Iterative Placement Method:  
 1. For each node, calculate the weight of all edges within d distance.
     - Take the ego graph of the node at .5 miles 
     - Add up the weight of all edges within the ego graph
@@ -23,7 +23,7 @@
 2. Remove the ego graph from the original graph.
 3. Repeat starting at step 1 on the new, smaller graph. Continue onward until no weighted edges remain.
 
-####Single-run Placement Method:
+#### Single-run Placement Method:
 1. For each node, calculate the weight of all edges within d distance.
     - Take the ego graph of the node at .5 miles 
     - Add up the weight of all edges within the ego graph
