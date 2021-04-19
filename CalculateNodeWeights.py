@@ -6,6 +6,8 @@ ox.config(log_console=True, use_cache=True)
 ox.__version__
 
 
+
+
 # 1. Read graph from gexf file, which already has households assigned to edges as edge weights
 nyc_graph = ox.load_graphml('graphFiles/graphml/mn_step1_allocateUnitsToEdges_20210418.graphml')
 
@@ -16,7 +18,7 @@ node_count = 0
 for node in list(nyc_graph.nodes):
     print(node)
     node_count += 1
-    ego_graph = nx.ego_graph(nyc_graph, node, distance='length', radius=805) # meters in a half-mile, rounded to the nearest meter
+    ego_graph = nx.ego_graph(nyc_graph, node, radius=805, undirected=False, distance='length') # meters in a half-mile, rounded to the nearest meter
     print(list(ego_graph.edges.data()))
     edge_weights_list = [int(float(edge[2]['UnitsRes'])) for edge in list(ego_graph.edges.data()) if 'UnitsRes' in edge[2]]
     print(edge_weights_list)
