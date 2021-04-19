@@ -16,20 +16,12 @@ Assignment Strategy
 3. Repeat starting at step 1 on the new, smaller graph. Continue onward until no weighted edges remain.
 """
 
-nyc_graph = ox.load_graphml('graphFiles/graphml/mn_step2_sumEdgeUnitsPerNode_20210418.graphml')
 
 def generate_nodes_list(G):
     return sorted(list(G.nodes.data()), key=lambda x: float(x[1]['UnitsWithinHalfMile']))
-nodes_list = generate_nodes_list(nyc_graph)
-print(nodes_list)
 
-# Note that uncovered units is not an accurate count of the total remaining units,
-# as units may be (and likely are) allocated to multiple nodes.
-# This is why I cast it as a boolean.
-def check_for_uncovered_units(nodes_list):
-    return bool(sum(float(item[1]['UnitsWithinHalfMile']) for item in nodes_list))
-uncovered_units = check_for_uncovered_units(nodes_list)
-print(uncovered_units)
+def check_for_uncovered_units(G):
+    return bool(sum(float(edge[2]['UnitsRes']) for edge in list(G.edges.data()) if 'UnitsRes' in edge[2]))
 
 def calculate_node_weights(G):
     for node in list(G.nodes):
@@ -39,6 +31,17 @@ def calculate_node_weights(G):
         edge_weights_sum = np.nansum(edge_weights_list)
         G.nodes[node]['UnitsWithinHalfMile'] = edge_weights_sum
     return G
+
+
+nyc_graph = ox.load_graphml('graphFiles/graphml/mn_step2_sumEdgeUnitsPerNode_20210418.graphml')
+print(list(nyc_graph.edges(data=True)))
+
+
+nodes_list = generate_nodes_list(nyc_graph)
+print(nodes_list)
+
+uncovered_units = check_for_uncovered_units(nyc_graph)
+print(uncovered_units)
 
 
 dropoff_nodes = []
@@ -56,9 +59,10 @@ while uncovered_units:
     nyc_graph.remove_edges_from(ego_edges)
     nyc_graph = calculate_node_weights(nyc_graph)
     nodes_list = generate_nodes_list(nyc_graph)
-    uncovered_units = check_for_uncovered_units(nodes_list)
+    uncovered_units = check_for_uncovered_units(nyc_graph)
     try:
-        ox.plot_graph(nyc_graph, show=False, save=True, filepath=rf'animationFrames/frame_{str(loop_count)}.png')
+        ox.plot_graph(nyc_graph, node_size=0, show=False, save=True, filepath=rf'animationFrames/run4/manhattan/mn_frame_{str(loop_count)}.png', close=True)
+        ox.plot_graph(ego_graph, node_size=0, show=False, save=True, filepath=rf'animationFrames/run4/localstreets/local_frame_{str(loop_count)}.png', close=True)
     except:
         pass
 
