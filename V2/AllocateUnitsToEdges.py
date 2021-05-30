@@ -1,25 +1,25 @@
 import os
 import requests
 
-import scipy
 from sodapy import Socrata
 import pandas as pd
 import geopandas as gpd
 import networkx as nx
 import osmnx as ox
 import numpy as np
-
+from dotenv import load_dotenv
+load_dotenv()
 ox.config(log_console=True, use_cache=True)
-ox.__version__
 
 pd.set_option('display.max_columns', 500)
 
 
 # 1. Compose multi-directional graph out of New York City's walkable streets.
 ## Currently filtered for Manhattan only
+
 """
 nyc_boroughs_withwater = gpd.read_file('https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Borough_Boundary_Water_Included/FeatureServer/0/query?where=1=1&outFields=*&outSR=4326&f=pgeojson').head(1)
-borough_graphs = [ox.graph_from_polygon(geom, network_type='walk', simplify=False) for geom in nyc_boroughs_withwater['geometry']]
+borough_graphs = [ox.graph_from_polygon(geom, network_type='walk', simplify=True) for geom in nyc_boroughs_withwater['geometry']]
 nyc_graph = nx.compose_all(borough_graphs)
 nyc_graph = nx.to_undirected(nyc_graph)
 nyc_graph = ox.save_graphml(nyc_graph, "nyc_graph_1.graphml")
@@ -28,10 +28,10 @@ nyc_graph = ox.load_graphml("nyc_graph_1.graphml")
 # 2. Get building data from NYC Open Data
 ## Currently filtered for Manhattan onlu (based on BBL first digit)
 client = Socrata("data.cityofnewyork.us",
-                 'odQdEcIxnATZPym3KySwgWw27',
-                 username=os.getenv('username'),
-                 password=os.getenv('password'))
-results = client.get("viz9-mrjz",
+                 'otB1pSM0wXyT9vs72WSs69Cpk',
+                 username='talzaken+new@gmail.com',
+                 password='MadVu8XKUGitAV4')
+results = client.get("wzyk-df9m",
                      content_type='geojson',
                      where=f"mpluto_bbl like '1%'", # is in Manhattan
                      limit=1100000)
