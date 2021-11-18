@@ -2,7 +2,7 @@
 
 This repo holds modules used for answering questions about 
 optimizing service locations for Manhattan's residential population, and some resources that I created along the way. 
-For example, the map above displays color-coded nodes that correspond to the residential population located within .5 miles walking distance of each intersection in Manhattan.
+For example, [this map](https://raw.githubusercontent.com/tal-z/NYCPopulationLocationOptimization/master/V3/imageFiles/ManhattanIntersectionHeatmap.png) (located in the /imageFiles directory) displays color-coded nodes that correspond to the residential population located within .5 miles walking distance of each intersection in Manhattan.
 
 #### Example questions:
 1) What is the minimum number of sites needed in order to place a site within .5 miles walking distance of every Manhattan resident?
